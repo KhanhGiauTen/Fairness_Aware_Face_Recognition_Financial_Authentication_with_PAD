@@ -1,0 +1,26 @@
+models:
+  yolo:
+    source: kaggle
+    handle: "khnhnguyn222/yolo-facedetection/pyTorch/default"
+    filename: "YOLO.pt"
+
+  deeppixbis:
+    source: kaggle
+    handle: "khnhnguyn222/deeppixbis/pyTorch/default"
+    filename: "DeepPixBis.pt"
+
+  arcface:
+    source: kaggle
+    handle: "khnhnguyn222/arcface-resnet34/pyTorch/default"
+    filename: "ArcFace.pt"
+    num_classes: 1000
+    feature_dim: 512
+
+  vit:
+    source: kaggle
+    handle: "khnhnguyn222/vision-transformer/pyTorch/default"
+    filename: "ViT.pt"
+    num_classes: 2
+
+known_db_path: "/kaggle/input/arcface-database/known_faces_db.pt"
+vit_spoof_threshold: 0.7
