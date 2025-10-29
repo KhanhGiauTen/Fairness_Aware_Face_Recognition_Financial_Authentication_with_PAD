@@ -1,26 +1,26 @@
 models:
   yolo:
-    source: kaggle
-    handle: "khnhnguyn222/yolo-facedetection/pyTorch/default"
+    source: huggingface
+    handle: "KhanhGiauTen/YOLO_FaceDetection"
     filename: "YOLO.pt"
 
   deeppixbis:
-    source: kaggle
-    handle: "khnhnguyn222/deeppixbis/pyTorch/default"
+    source: huggingface
+    handle: "KhanhGiauTen/DeepPixBis"
     filename: "DeepPixBis.pt"
 
   arcface:
-    source: kaggle
-    handle: "khnhnguyn222/arcface-resnet34/pyTorch/default"
+    source: huggingface
+    handle: "KhanhGiauTen/ArcFace"
     filename: "ArcFace.pt"
     num_classes: 1000
     feature_dim: 512
 
   vit:
-    source: kaggle
-    handle: "khnhnguyn222/vision-transformer/pyTorch/default"
+    source: huggingface
+    handle: "KhanhGiauTen/Vision_Transformer"
     filename: "ViT.pt"
     num_classes: 2
 
-known_db_path: "/kaggle/input/arcface-database/known_faces_db.pt"
-vit_spoof_threshold: 0.7
+known_db_path: "C:/Users/Acer/source/repos/DSS/Fairness_Aware_Face_Recognition_Financial_Authentication_with_PAD/known_faces_db.pt"
+vit_spoof_threshold: 0.5

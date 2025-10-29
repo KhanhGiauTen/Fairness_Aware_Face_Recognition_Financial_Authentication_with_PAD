@@ -6,15 +6,15 @@ import torch.nn.functional as F
 from PIL import Image
 import cv2
 
+
 from src.model.deeppixbis import DeepPixBiS
 from src.model.arcface import ArcFaceModel
 from src.model.vit import ViTModel
 
-from src.ultil import get_model_entry, load_from_kaggle, load_checkpoint_to_model
+
+from src.ultil import get_model_entry, load_model_asset, load_checkpoint_to_model, get_source
 
 logger = logging.getLogger(__name__)
-
-
 
 class FaceAnalysisDSS:
     def __init__(self, device=None):
@@ -23,63 +23,75 @@ class FaceAnalysisDSS:
     @classmethod
     def from_config(cls, cfg: dict):
         inst = cls()
+        logger.info(f"Khởi tạo FaceAnalysisDSS trên thiết bị: {inst.device}")
 
-        # YOLO
-        yolo_entry = get_model_entry(cfg, 'yolo')
-        yolo_handle = yolo_entry.get('handle')
-        yolo_file = yolo_entry.get('filename')
-        try:
-            yolo_path = load_from_kaggle(yolo_handle, filename=yolo_file)
-            from ultralytics import YOLO
-            inst.yolo_model = YOLO(str(yolo_path)) if os.path.isfile(yolo_path) else YOLO(str(yolo_path))
-        except Exception as e:
-            raise RuntimeError(f"Failed to load YOLO: {e}")
+        model_names = ['yolo', 'arcface', 'vit', 'deeppixbis']
 
-        arc_entry = get_model_entry(cfg, 'arcface')
-        arc_handle = arc_entry.get('handle')
-        arc_file = arc_entry.get('filename')
-        num_classes = arc_entry.get('num_classes', 1000)
-        feature_dim = arc_entry.get('feature_dim', 512)
-        inst.arcface_model = ArcFaceModel(num_classes=num_classes, feature_dim=feature_dim).to(inst.device)
-        try:
-            arc_ckpt = load_from_kaggle(arc_handle, filename=arc_file)
-            if os.path.isfile(arc_ckpt):
-                load_checkpoint_to_model(inst.arcface_model, arc_ckpt, device=inst.device)
-        except Exception as e:
-            logger.warning("Could not load ArcFace checkpoint: %s", e)
+        for name in model_names:
+            logger.info(f"Đang xử lý model: {name}")
+            entry = get_model_entry(cfg, name)
 
-        vit_entry = get_model_entry(cfg, 'vit')
-        vit_handle = vit_entry.get('handle')
-        vit_file = vit_entry.get('filename')
-        num_vit_classes = vit_entry.get('num_classes', 2)
-        inst.vit_model = ViTModel(num_classes=num_vit_classes).to(inst.device)
-        try:
-            vit_ckpt = load_from_kaggle(vit_handle, filename=vit_file)
-            if os.path.isfile(vit_ckpt):
-                load_checkpoint_to_model(inst.vit_model, vit_ckpt, device=inst.device)
-        except Exception as e:
-            logger.warning("Could not load ViT checkpoint: %s", e)
+            if not entry:
+                if name == 'deeppixbis': 
+                    logger.warning(f"Không tìm thấy cấu hình cho model '{name}'. Bỏ qua DeepPixBis.")
+                    inst.deepix_model = None
+                    continue
+                else:
+                    raise ValueError(f"Thiếu cấu hình bắt buộc cho model '{name}' trong file config.")
 
-        deeppix_entry = get_model_entry(cfg, 'deeppixbis')
-        if deeppix_entry:
-            dp_handle = deeppix_entry.get('handle')
-            dp_file = deeppix_entry.get('filename')
+            handle = entry.get('handle')
+            filename = entry.get('filename')
+            source = get_source(cfg, name)
+
+            if not handle:
+                raise ValueError(f"Thiếu 'handle' (hoặc đường dẫn local) cho model '{name}' trong file config.")
+
+            model_path = None
             try:
-                inst.deepix_model = DeepPixBiS().to(inst.device)
-                dp_ckpt = load_from_kaggle(dp_handle, filename=dp_file)
-                if os.path.isfile(dp_ckpt):
-                    load_checkpoint_to_model(inst.deepix_model, dp_ckpt, device=inst.device)
-            except Exception as e:
-                logger.warning("Could not load DeepPixBis checkpoint: %s", e)
+                logger.info(f"Đang tải '{name}' từ nguồn '{source}'...")
+                model_path = load_model_asset(source, handle, filename)
+                logger.info(f"Đã lấy tài nguyên cho '{name}' tại: {model_path}")
 
-        # labels and threshold
+                if name == 'yolo':
+                    from ultralytics import YOLO
+                    inst.yolo_model = YOLO(str(model_path))
+                    logger.info(f"Đã load YOLO.")
+
+                elif name == 'arcface':
+                    num_classes = entry.get('num_classes', 1000) 
+                    feature_dim = entry.get('feature_dim', 512) 
+                    inst.arcface_model = ArcFaceModel(num_classes=num_classes, feature_dim=feature_dim)
+                    load_checkpoint_to_model(inst.arcface_model, model_path, device=inst.device)
+                    logger.info(f"Đã load ArcFace.")
+
+                elif name == 'vit':
+                    num_vit_classes = entry.get('num_classes', 2) 
+                    inst.vit_model = ViTModel(num_classes=num_vit_classes)
+                    load_checkpoint_to_model(inst.vit_model, model_path, device=inst.device)
+                    logger.info(f"Đã load ViT.")
+
+                elif name == 'deeppixbis':
+                    inst.deepix_model = DeepPixBiS()
+                    load_checkpoint_to_model(inst.deepix_model, model_path, device=inst.device)
+                    logger.info(f"Đã load DeepPixBis.")
+
+            except Exception as e:
+
+                if name != 'deeppixbis':
+                    logger.error(f"Lỗi nghiêm trọng khi tải model '{name}' từ '{source}': {e}", exc_info=True) 
+                    raise RuntimeError(f"Không thể tải model bắt buộc '{name}': {e}")
+                else:
+                    logger.warning(f"Không thể tải model tùy chọn 'deeppixbis' từ '{source}': {e}. Tiếp tục mà không có DeepPixBis.")
+                    inst.deepix_model = None 
+                    
         inst.vit_labels = {0: 'LIVE', 1: 'SPOOF'}
         inst.vit_spoof_threshold = float(cfg.get('vit_spoof_threshold', 0.7))
+        logger.info(f"Ngưỡng ViT spoof: {inst.vit_spoof_threshold}")
 
-        # load known database and transforms
         known_path = cfg.get('known_db_path')
         inst.known_embeddings, inst.known_names = inst._load_known_db(known_path)
-        inst._init_transforms()
+        inst._init_transforms() 
+        logger.info("Khởi tạo FaceAnalysisDSS hoàn tất.")
         return inst
 
     def _load_known_db(self, db_path):
@@ -94,117 +106,172 @@ class FaceAnalysisDSS:
                     raise KeyError("Database file must contain keys 'embeddings' and 'names'.")
                 known_embeddings = db_data['embeddings']
                 known_names = db_data['names']
+                logger.info(f"Đã tải {len(known_names)} định danh từ CSDL.")
             except Exception as e:
                 logger.warning("Error loading DB file: %s. Using synthetic data.", e)
                 known_embeddings = [torch.randn(512), torch.randn(512)]
                 known_names = ["Person1", "Person2"]
-        if known_embeddings:
-            embeddings_tensor = F.normalize(torch.stack(known_embeddings), p=2, dim=1).to(self.device)
+
+
+        if isinstance(known_embeddings, torch.Tensor):
+            embeddings_tensor = known_embeddings.to(self.device)
+        elif isinstance(known_embeddings, list) and len(known_embeddings) > 0:
+            try:
+                embeddings_tensor = F.normalize(torch.stack(known_embeddings), p=2, dim=1).to(self.device)
+            except Exception as stack_err:
+                 logger.error(f"Lỗi khi stack/normalize CSDL embeddings: {stack_err}. Kiểm tra định dạng embeddings trong file DB.")
+                 embeddings_tensor = torch.empty((0, 512)).to(self.device)
         else:
+            logger.warning("CSDL rỗng hoặc không hợp lệ.")
             embeddings_tensor = torch.empty((0, 512)).to(self.device)
+
         return embeddings_tensor, known_names
 
     def _init_transforms(self):
         from torchvision import transforms
         imagenet_mean = [0.485, 0.456, 0.406]
         imagenet_std = [0.229, 0.224, 0.225]
+
+        # Transform cho ArcFace
         self.arcface_transform = transforms.Compose([
             transforms.Resize((112, 112)),
             transforms.ToTensor(),
             transforms.Normalize(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5])
         ])
+
+        # Transform cho ViT
         self.vit_transform = transforms.Compose([
             transforms.Resize((224, 224)),
             transforms.ToTensor(),
             transforms.Normalize(mean=imagenet_mean, std=imagenet_std)
         ])
 
+        if hasattr(self, 'deepix_model') and self.deepix_model is not None:
+             self.deepix_transform = transforms.Compose([
+                 transforms.Resize((224, 224)),
+                 transforms.ToTensor(),
+                 transforms.Normalize(mean=imagenet_mean, std=imagenet_std)
+             ])
+             logger.info("Đã khởi tạo transform cho DeepPixBis.")
+        else:
+             self.deepix_transform = None
+             logger.info("Bỏ qua transform cho DeepPixBis (model không được load).")
+        logger.info("Đã khởi tạo các transforms còn lại.")
+
     def _get_identity(self, embedding, threshold=0.4):
         if self.known_embeddings.shape[0] == 0:
             return "NoDatabase", 0.0
-        cos_sim = F.linear(embedding, self.known_embeddings)
-        best_score, best_idx = torch.max(cos_sim, dim=1)
-        score = best_score.item()
-        if score > threshold:
-            return self.known_names[best_idx.item()], score
-        else:
-            return "Unknown", score
+        try:
+            cos_sim = F.linear(embedding, self.known_embeddings)
+            best_score, best_idx = torch.max(cos_sim, dim=1)
+            score = best_score.item()
+            if score > threshold:
+                idx = best_idx.item()
+                if 0 <= idx < len(self.known_names):
+                    return self.known_names[idx], score
+                else:
+                    logger.error(f"Lỗi index định danh: index {idx} / số lượng tên {len(self.known_names)}")
+                    return "IndexError", score 
+            else:
+                return "Unknown", score
+        except Exception as e:
+            logger.error(f"Lỗi trong _get_identity: {e}")
+            return "ErrorGetID", 0.0 
 
     def process_frame(self, frame_bgr):
         frame_rgb = cv2.cvtColor(frame_bgr, cv2.COLOR_BGR2RGB)
-        yolo_results = self.yolo_model(frame_rgb, verbose=False, conf=0.6)
-        detections = yolo_results[0].boxes
         pipeline_results = []
-        for box in detections:
-            x1, y1, x2, y2 = box.xyxy[0].int().tolist()
-            face_crop_rgb = frame_rgb[y1:y2, x1:x2]
-            if face_crop_rgb.shape[0] < 10 or face_crop_rgb.shape[1] < 10:
-                continue
-            face_pil = Image.fromarray(face_crop_rgb)
+        try:
+            yolo_results = self.yolo_model(frame_rgb, verbose=False, conf=0.6)
+            detections = yolo_results[0].boxes
+        except Exception as e:
+            logger.error(f"Lỗi khi chạy YOLO detection: {e}")
+            detections = [] 
 
-            vit_input = self.vit_transform(face_pil).unsqueeze(0).to(self.device)
-            with torch.no_grad():
-                vit_logits = self.vit_model(vit_input)
-                vit_probs = F.softmax(vit_logits, dim=1)
-                spoof_prob_vit = vit_probs[0, 1].item()
-                vit_pred = vit_logits.argmax(-1).item()
-                status_label = self.vit_labels.get(vit_pred)
+        for box in detections:
+            status_label = "ERROR" 
+            spoof_prob_vit = -1.0
+            spoof_prob_dp = -1.0
+            identity = "N/A"
+            id_score = 0.0
+            color = (0, 165, 255) 
+
+            try:
+                x1, y1, x2, y2 = box.xyxy[0].int().tolist()
+                face_crop_rgb = frame_rgb[y1:y2, x1:x2]
+                if face_crop_rgb.shape[0] < 10 or face_crop_rgb.shape[1] < 10: continue
+                face_pil = Image.fromarray(face_crop_rgb)
+
+                vit_input = self.vit_transform(face_pil).unsqueeze(0).to(self.device)
+                with torch.no_grad():
+                    vit_logits = self.vit_model(vit_input)
+                    vit_probs = F.softmax(vit_logits, dim=1)
+                    spoof_prob_vit = vit_probs[0, 1].item()
+                    
+                if hasattr(self, 'deepix_model') and self.deepix_model is not None and self.deepix_transform is not None:
+                    try:
+                        dp_input = self.deepix_transform(face_pil).unsqueeze(0).to(self.device)
+                        with torch.no_grad(): spoof_prob_dp = self.deepix_model(dp_input).item()
+                    except Exception as e_dp: logger.error(f"Lỗi khi chạy DeepPixBis: {e_dp}")
+
 
                 if spoof_prob_vit > self.vit_spoof_threshold:
                     status_label = "SPOOF"
                     color = (0, 0, 255)
+                    text = f"{status_label} (ViT:{spoof_prob_vit:.2f})"
+                    if spoof_prob_dp != -1.0: text += f" (DP:{spoof_prob_dp:.2f})"
                     cv2.rectangle(frame_bgr, (x1, y1), (x2, y2), color, 2)
-                    cv2.putText(frame_bgr, f"{status_label} (ViT: {spoof_prob_vit:.2f})", (x1, y1 - 10),
-                                cv2.FONT_HERSHEY_SIMPLEX, 0.6, color, 2)
-                    pipeline_results.append({
-                        "bbox": [x1, y1, x2, y2],
-                        "status": status_label,
-                        "spoof_prob_vit": spoof_prob_vit
-                    })
-                    continue
+                    cv2.putText(frame_bgr, text, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.6, color, 2)
 
-                # If not spoof -> continue with identification
-                status = "LIVE"
-                color = (0, 255, 0)
+                else: 
+                    status_label = "LIVE"
+                    color = (0, 255, 0)
+                    arcface_input = self.arcface_transform(face_pil).unsqueeze(0).to(self.device)
+                    with torch.no_grad():
+                        embedding = self.arcface_model(arcface_input)
+                        identity, id_score = self._get_identity(embedding)
 
-            arcface_input = self.arcface_transform(face_pil).unsqueeze(0).to(self.device)
-            with torch.no_grad():
-                embedding = self.arcface_model(arcface_input)
-                identity, id_score = self._get_identity(embedding)
+                    result_text = f"{identity} ({id_score:.2f})"
+                    cv2.rectangle(frame_bgr, (x1, y1), (x2, y2), color, 2)
+                    cv2.putText(frame_bgr, result_text, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.6, color, 2)
 
-            result_text = f"{identity} ({id_score:.2f})"
-            cv2.rectangle(frame_bgr, (x1, y1), (x2, y2), color, 2)
-            cv2.putText(frame_bgr, result_text, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.6, color, 2)
+                pipeline_results.append({
+                    "bbox": [x1, y1, x2, y2],
+                    "status": status_label,
+                    "identity": identity if status_label == "LIVE" else "N/A",
+                    "identity_score": id_score if status_label == "LIVE" else 0.0,
+                    "spoof_prob_vit": spoof_prob_vit,
+                    "spoof_prob_dp": spoof_prob_dp
+                })
 
-            pipeline_results.append({
-                "bbox": [x1, y1, x2, y2],
-                "status": status,
-                "identity": identity,
-                "identity_score": id_score,
-                "spoof_prob_vit": spoof_prob_vit,
-            })
+            except Exception as e_inner:
+                logger.error(f"Lỗi khi xử lý bounding box {box.xyxy[0].int().tolist()}: {e_inner}", exc_info=True)
+                pipeline_results.append({"bbox": box.xyxy[0].int().tolist() if box.xyxy.numel() > 0 else [], "status": "ERROR_PROCESSING"})
+
 
         return frame_bgr, pipeline_results
 
     def run_demo(self):
         logger.info("Opening camera... (press 'q' to exit)")
         cap = cv2.VideoCapture(0)
-        if not cap.isOpened():
-            logger.error("Cannot open camera.")
-            raise RuntimeError("Cannot open camera")
+        if not cap.isOpened(): logger.error("Cannot open camera."); raise RuntimeError("Cannot open camera")
         while True:
             ret, frame = cap.read()
-            if not ret:
-                logger.error("Failed to read frame from camera.")
-                break
-            processed_frame, results = self.process_frame(frame)
-            if results:
-                live_faces = [r for r in results if r['status'] == 'LIVE']
-                spoof_faces = len(results) - len(live_faces)
-                logger.info("Frame results: %d LIVE, %d SPOOF | Details: %s", len(live_faces), spoof_faces, results)
-            cv2.imshow('Face Analysis DSS (press q to exit)', processed_frame)
-            if cv2.waitKey(1) & 0xFF == ord('q'):
-                break
+            if not ret: logger.error("Failed to read frame from camera."); break
+            try:
+                 processed_frame, results = self.process_frame(frame)
+                 if results:
+                     live_faces = [r for r in results if r['status'] == 'LIVE']
+                     spoof_faces = len([r for r in results if r['status'] == 'SPOOF'])
+                     error_faces = len(results) - len(live_faces) - spoof_faces
+                     logger.info("Frame results: %d LIVE, %d SPOOF, %d ERROR | Details: %s", len(live_faces), spoof_faces, error_faces, results)
+                 cv2.imshow('Face Analysis DSS (press q to exit)', processed_frame)
+            except Exception as e:
+                 logger.error(f"Lỗi nghiêm trọng trong vòng lặp xử lý frame: {e}", exc_info=True) 
+                 cv2.putText(frame, "CRITICAL ERROR IN LOOP", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,0,255), 2)
+                 cv2.imshow('Face Analysis DSS (press q to exit)', frame) 
+
+            if cv2.waitKey(1) & 0xFF == ord('q'): break
         cap.release()
         cv2.destroyAllWindows()
         logger.info("Camera closed.")
