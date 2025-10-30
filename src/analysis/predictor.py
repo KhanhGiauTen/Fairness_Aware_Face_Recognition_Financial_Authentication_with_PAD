@@ -186,20 +186,26 @@ class FaceAnalysisDSS:
             detections = yolo_results[0].boxes
         except Exception as e:
             logger.error(f"Lỗi khi chạy YOLO detection: {e}")
-            detections = [] 
+            detections = []
+
+        # Đọc config uncertainty nếu có
+        lower_spoof = getattr(self, 'uncertainty_lower', 0.65)
+        upper_spoof = getattr(self, 'uncertainty_upper', 0.75)
+        auto_save_enabled = getattr(self, 'auto_save_enabled', True)
 
         for box in detections:
-            status_label = "ERROR" 
+            status_label = "ERROR"
             spoof_prob_vit = -1.0
             spoof_prob_dp = -1.0
             identity = "N/A"
             id_score = 0.0
-            color = (0, 165, 255) 
+            color = (0, 165, 255)
 
             try:
                 x1, y1, x2, y2 = box.xyxy[0].int().tolist()
                 face_crop_rgb = frame_rgb[y1:y2, x1:x2]
-                if face_crop_rgb.shape[0] < 10 or face_crop_rgb.shape[1] < 10: continue
+                if face_crop_rgb.shape[0] < 10 or face_crop_rgb.shape[1] < 10:
+                    continue
                 face_pil = Image.fromarray(face_crop_rgb)
 
                 vit_input = self.vit_transform(face_pil).unsqueeze(0).to(self.device)
@@ -207,47 +213,73 @@ class FaceAnalysisDSS:
                     vit_logits = self.vit_model(vit_input)
                     vit_probs = F.softmax(vit_logits, dim=1)
                     spoof_prob_vit = vit_probs[0, 1].item()
-                    
+
                 if hasattr(self, 'deepix_model') and self.deepix_model is not None and self.deepix_transform is not None:
                     try:
                         dp_input = self.deepix_transform(face_pil).unsqueeze(0).to(self.device)
-                        with torch.no_grad(): spoof_prob_dp = self.deepix_model(dp_input).item()
-                    except Exception as e_dp: logger.error(f"Lỗi khi chạy DeepPixBis: {e_dp}")
+                        with torch.no_grad():
+                            spoof_prob_dp = self.deepix_model(dp_input).item()
+                    except Exception as e_dp:
+                        logger.error(f"Lỗi khi chạy DeepPixBis: {e_dp}")
 
+                reasons = []
+                # Chỉ auto-save nếu spoof_prob_vit nằm trong khoảng uncertainty
+                if lower_spoof <= spoof_prob_vit <= upper_spoof:
+                    reasons.append('vit_uncertain')
+
+                scores = {
+                    'spoof_prob_vit': spoof_prob_vit
+                }
+                # Nếu vẫn dùng DeepPixBis, có thể lưu lại giá trị nhưng không dùng cho auto-save
+                if spoof_prob_dp != -1.0:
+                    scores['spoof_prob_dp'] = spoof_prob_dp
 
                 if spoof_prob_vit > self.vit_spoof_threshold:
                     status_label = "SPOOF"
                     color = (0, 0, 255)
-                    text = f"{status_label} (ViT:{spoof_prob_vit:.2f})"
-                    if spoof_prob_dp != -1.0: text += f" (DP:{spoof_prob_dp:.2f})"
+                    text = f"{status_label} (ViT:{float(spoof_prob_vit):.2f})" if isinstance(spoof_prob_vit, (float, int)) else f"{status_label} (ViT:{spoof_prob_vit})"
+                    if spoof_prob_dp != -1.0:
+                        text += f" (DP:{float(spoof_prob_dp):.2f})" if isinstance(spoof_prob_dp, (float, int)) else f" (DP:{spoof_prob_dp})"
                     cv2.rectangle(frame_bgr, (x1, y1), (x2, y2), color, 2)
                     cv2.putText(frame_bgr, text, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.6, color, 2)
+                    pipeline_results.append({
+                        "bbox": [x1, y1, x2, y2],
+                        "status": status_label,
+                        "identity": "N/A",
+                        "identity_score": 0.0,
+                        "spoof_prob_vit": spoof_prob_vit,
+                        "spoof_prob_dp": spoof_prob_dp,
+                        "reasons": reasons,
+                        "scores": scores
+                    })
+                    continue
 
-                else: 
-                    status_label = "LIVE"
-                    color = (0, 255, 0)
-                    arcface_input = self.arcface_transform(face_pil).unsqueeze(0).to(self.device)
-                    with torch.no_grad():
-                        embedding = self.arcface_model(arcface_input)
-                        identity, id_score = self._get_identity(embedding)
+                status_label = "LIVE"
+                color = (0, 255, 0)
+                arcface_input = self.arcface_transform(face_pil).unsqueeze(0).to(self.device)
+                with torch.no_grad():
+                    embedding = self.arcface_model(arcface_input)
+                    identity, id_score = self._get_identity(embedding)
 
-                    result_text = f"{identity} ({id_score:.2f})"
-                    cv2.rectangle(frame_bgr, (x1, y1), (x2, y2), color, 2)
-                    cv2.putText(frame_bgr, result_text, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.6, color, 2)
+                scores['identity_score'] = id_score
 
+                result_text = f"{identity} ({float(id_score):.2f})" if isinstance(id_score, (float, int)) else f"{identity} ({id_score})"
+                cv2.rectangle(frame_bgr, (x1, y1), (x2, y2), color, 2)
+                cv2.putText(frame_bgr, result_text, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.6, color, 2)
                 pipeline_results.append({
                     "bbox": [x1, y1, x2, y2],
                     "status": status_label,
-                    "identity": identity if status_label == "LIVE" else "N/A",
-                    "identity_score": id_score if status_label == "LIVE" else 0.0,
+                    "identity": identity,
+                    "identity_score": id_score,
                     "spoof_prob_vit": spoof_prob_vit,
-                    "spoof_prob_dp": spoof_prob_dp
+                    "spoof_prob_dp": spoof_prob_dp,
+                    "reasons": reasons,
+                    "scores": scores
                 })
 
             except Exception as e_inner:
                 logger.error(f"Lỗi khi xử lý bounding box {box.xyxy[0].int().tolist()}: {e_inner}", exc_info=True)
                 pipeline_results.append({"bbox": box.xyxy[0].int().tolist() if box.xyxy.numel() > 0 else [], "status": "ERROR_PROCESSING"})
-
 
         return frame_bgr, pipeline_results
 

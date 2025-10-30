@@ -48,7 +48,12 @@ def load_pipeline():
         #      import huggingface_hub; # huggingface_hub.login()
         # except Exception: logger.warning("HF Hub login lỗi hoặc bỏ qua.")
 
+        # Truyền config vào khi khởi tạo để có review_handler
         pipeline = FaceAnalysisDSS.from_config(cfg)
+        # Nếu pipeline không có review_handler, khởi tạo thủ công
+        if not hasattr(pipeline, 'review_handler') or pipeline.review_handler is None:
+            from src.analysis.review_handler import ReviewHandler
+            pipeline.review_handler = ReviewHandler(cfg)
         logger.info("Khởi tạo FaceAnalysisDSS thành công.")
         pipeline.db_path = cfg.get('known_db_path', "known_faces_db.pt")
         # Lấy ngưỡng từ config để hiển thị
@@ -85,15 +90,14 @@ st.markdown("---")
 # --- Sidebar ---
 with st.sidebar:
     st.header("🛠️ Chế độ hoạt động")
-    mode = st.radio( 
+    mode = st.radio(
         "Chọn chức năng:",
-        ["Giới thiệu", "👤 Đăng ký Danh tính", "📷 Webcam Trực tiếp", "🖼️ Tải ảnh lên"],
+        ["Giới thiệu", "👤 Đăng ký Danh tính", "📷 Webcam Trực tiếp", "🖼️ Tải ảnh lên", "⚙️ Admin Review"],
         key="mode_selection"
     )
     st.divider()
     st.header("ℹ️ Thông tin")
     st.info(f"Ngưỡng phát hiện giả mạo (ViT): **{VIT_THRESHOLD_DISPLAY}**")
-
     with st.expander("Danh sách đã đăng ký"):
         if dss_pipeline and dss_pipeline.known_names:
             st.write(dss_pipeline.known_names)
@@ -288,9 +292,34 @@ elif mode == "📷 Webcam Trực tiếp":
                     break
                 
                 try:
+                    frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
                     processed_frame_bgr, results = dss_pipeline.process_frame(frame)
                     processed_frame_rgb = cv2.cvtColor(processed_frame_bgr, cv2.COLOR_BGR2RGB)
                     FRAME_WINDOW.image(processed_frame_rgb)
+                    
+                    # Xử lý auto-save cho các case cần review
+                    for result in results:
+                        # Lấy khuôn mặt từ bounding box
+                        if 'bbox' in result:
+                            x1, y1, x2, y2 = result['bbox']
+                            face_crop_rgb = frame_rgb[y1:y2, x1:x2]
+                            
+                            # Kiểm tra các điều kiện để auto-save
+                            if 'vit_uncertain' in result.get('reasons', []) or \
+                               'model_disagreement' in result.get('reasons', []):
+                                try:
+                                    # Lưu case để review
+                                    dss_pipeline.review_handler.save_review_case(
+                                        face_crop_rgb,
+                                        scores=result.get('scores', {}),
+                                        context={
+                                            'camera_quality': result.get('camera_quality', 'unknown'),
+                                            'decision': result.get('status', 'unknown'),
+                                            'reasons': result.get('reasons', [])
+                                        }
+                                    )
+                                except Exception as e:
+                                    logger.error(f"Lỗi khi auto-save case: {e}")
 
                     # Cập nhật trạng thái
                     live_count = len([r for r in results if r['status'] == 'LIVE'])
@@ -358,6 +387,135 @@ elif mode == "🖼️ Tải ảnh lên":
         except Exception as e_upload:
             logger.error(f"Lỗi khi xử lý ảnh tải lên: {e_upload}", exc_info=True)
             st.error(f"Có lỗi xảy ra: {e_upload}")
+
+# --- Chế độ Admin Review ---
+elif mode == "⚙️ Admin Review":
+    st.header("⚙️ Quản lý Review Cases")
+    
+    # Lấy danh sách các case cần review
+    try:
+        pending_cases = dss_pipeline.review_handler.get_pending_cases()
+    except Exception as e:
+        st.error(f"Lỗi khi lấy danh sách case: {str(e)}")
+        st.stop()
+    
+    if not pending_cases:
+        st.info("✨ Không có case nào cần review.")
+        st.stop()
+    
+    # Hiển thị tổng quan
+    st.info(f"📋 Tổng số case cần review: {len(pending_cases)}")
+    
+    # Chọn case để review
+    selected_case = st.selectbox(
+        "Chọn case để review:",
+        list(pending_cases.keys()),
+        format_func=lambda x: f"Case {x[:8]}... ({pending_cases[x]['timestamp']})"
+    )
+    
+    if selected_case:
+        case_data = pending_cases[selected_case]
+        
+        # Hiển thị thông tin case
+        col1, col2 = st.columns(2)
+        with col1:
+            st.subheader("Thông tin Chi tiết")
+            st.write(f"📅 Thời gian: {case_data['timestamp']}")
+            st.write(f"📷 Camera Quality: {case_data.get('context', {}).get('camera_quality', 'N/A')}")
+            
+            # Hiển thị các điểm số
+            if 'scores' in case_data:
+                scores = case_data['scores']
+                st.write("📊 Scores:")
+                spoof_vit = scores.get('spoof_prob_vit', 'N/A')
+                spoof_vit_str = f"{float(spoof_vit):.3f}" if isinstance(spoof_vit, (float, int)) else str(spoof_vit)
+                st.write(f"- ViT Spoof: {spoof_vit_str}")
+                if 'spoof_prob_dp' in scores:
+                    spoof_dp = scores.get('spoof_prob_dp', 'N/A')
+                    spoof_dp_str = f"{float(spoof_dp):.3f}" if isinstance(spoof_dp, (float, int)) else str(spoof_dp)
+                    st.write(f"- DeepPixBis: {spoof_dp_str}")
+                identity_score = scores.get('identity_score', 'N/A')
+                identity_score_str = f"{float(identity_score):.3f}" if isinstance(identity_score, (float, int)) else str(identity_score)
+                st.write(f"- Identity Score: {identity_score_str}")
+            
+            # Hiển thị lý do review
+            if 'context' in case_data and 'reasons' in case_data['context']:
+                st.write("❓ Lý do review:")
+                for reason in case_data['context']['reasons']:
+                    st.write(f"- {reason}")
+        
+        with col2:
+            # Hiển thị ảnh
+            try:
+                image_path = Path(dss_pipeline.review_handler.review_paths['needs_review']) / f"{selected_case}.jpg"
+                if image_path.exists():
+                    image = cv2.imread(str(image_path))
+                    if image is not None:
+                        st.image(cv2.cvtColor(image, cv2.COLOR_BGR2RGB), 
+                                caption="Ảnh cần review",
+                                use_column_width=True)
+                    else:
+                        st.error("Không thể đọc ảnh")
+                else:
+                    st.error("Không tìm thấy file ảnh")
+            except Exception as e:
+                st.error(f"Lỗi khi hiển thị ảnh: {str(e)}")
+        
+        # Form gán nhãn
+        with st.form("review_form"):
+            st.subheader("Gán nhãn Ground Truth")
+            
+            # Chọn nhãn
+            ground_truth = st.radio(
+                "Phân loại:",
+                ["LIVE", "SPOOF"],
+                key=f"label_{selected_case}"
+            )
+            
+            # Thêm tên nếu là LIVE
+            person_name = None
+            if ground_truth == "LIVE":
+                add_to_db = st.checkbox("Thêm vào Database?")
+                if add_to_db:
+                    person_name = st.text_input("Tên người dùng:")
+            
+            # Nút submit
+            submitted = st.form_submit_button("Xác nhận & Lưu")
+            
+            if submitted:
+                try:
+                    # Cập nhật nhãn
+                    success = dss_pipeline.review_handler.update_case_label(
+                        selected_case,
+                        ground_truth,
+                        identity=person_name
+                    )
+                    
+                    if success:
+                        # Nếu là LIVE và có tên, thêm vào DB
+                        if ground_truth == "LIVE" and person_name:
+                            try:
+                                db_success = dss_pipeline.review_handler.append_identity_to_db(
+                                    dss_pipeline,
+                                    [image_path],
+                                    person_name,
+                                    min_images=1  # Cho phép 1 ảnh vì đã được review
+                                )
+                                if db_success:
+                                    st.success(f"✅ Đã thêm {person_name} vào database!")
+                                else:
+                                    st.error("Lỗi khi thêm vào database")
+                            except Exception as e:
+                                st.error(f"Lỗi khi thêm vào DB: {str(e)}")
+                        
+                        st.success("✅ Đã cập nhật case thành công!")
+                        import time; time.sleep(1)
+                        st.experimental_rerun()
+                    else:
+                        st.error("Lỗi khi cập nhật case")
+                except Exception as e:
+                    st.error(f"Lỗi trong quá trình review: {str(e)}")
+                    logger.error(f"Review error: {e}", exc_info=True)
 
 # --- Hiển thị khi chưa chọn chế độ ---
 elif mode == "---":
