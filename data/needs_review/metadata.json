@@ -1,0 +1,1784 @@
+{
+  "20251030_171757": {
+    "timestamp": "2025-10-30T17:17:57.979821",
+    "scores": {
+      "spoof_prob_vit": 0.9077088832855225,
+      "spoof_prob_dp": 0.003911822102963924
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "model_disagreement"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_171758": {
+    "timestamp": "2025-10-30T17:17:58.916645",
+    "scores": {
+      "spoof_prob_vit": 0.9125616550445557,
+      "spoof_prob_dp": 0.0037218325305730104
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "model_disagreement"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_171759": {
+    "timestamp": "2025-10-30T17:17:59.937986",
+    "scores": {
+      "spoof_prob_vit": 0.9024882912635803,
+      "spoof_prob_dp": 0.0018020253628492355
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "model_disagreement"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_171800": {
+    "timestamp": "2025-10-30T17:18:00.927334",
+    "scores": {
+      "spoof_prob_vit": 0.9187644720077515,
+      "spoof_prob_dp": 0.00895384605973959
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "model_disagreement"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_171801": {
+    "timestamp": "2025-10-30T17:18:01.931357",
+    "scores": {
+      "spoof_prob_vit": 0.9047040939331055,
+      "spoof_prob_dp": 0.0003745832364074886
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "model_disagreement"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_171802": {
+    "timestamp": "2025-10-30T17:18:02.955210",
+    "scores": {
+      "spoof_prob_vit": 0.9235427379608154,
+      "spoof_prob_dp": 0.014757704921066761
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "model_disagreement"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_171803": {
+    "timestamp": "2025-10-30T17:18:03.893071",
+    "scores": {
+      "spoof_prob_vit": 0.9247190952301025,
+      "spoof_prob_dp": 0.006355955731123686
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "model_disagreement"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_171804": {
+    "timestamp": "2025-10-30T17:18:04.968437",
+    "scores": {
+      "spoof_prob_vit": 0.828569769859314,
+      "spoof_prob_dp": 0.0005332562723197043
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "model_disagreement"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_171805": {
+    "timestamp": "2025-10-30T17:18:05.609435",
+    "scores": {
+      "spoof_prob_vit": 0.6937665343284607,
+      "spoof_prob_dp": 0.004015985876321793,
+      "identity_score": 0.8649703860282898
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "LIVE",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_171807": {
+    "timestamp": "2025-10-30T17:18:07.983592",
+    "scores": {
+      "spoof_prob_vit": 0.7433978319168091,
+      "spoof_prob_dp": 0.41764846444129944
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain",
+        "model_disagreement"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_171808": {
+    "timestamp": "2025-10-30T17:18:08.903405",
+    "scores": {
+      "spoof_prob_vit": 0.725368082523346,
+      "spoof_prob_dp": 0.11368661373853683
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain",
+        "model_disagreement"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_171809": {
+    "timestamp": "2025-10-30T17:18:09.965492",
+    "scores": {
+      "spoof_prob_vit": 0.6558042168617249,
+      "spoof_prob_dp": 0.0009012174559757113,
+      "identity_score": 0.7849817276000977
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "LIVE",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_171810": {
+    "timestamp": "2025-10-30T17:18:10.622923",
+    "scores": {
+      "spoof_prob_vit": 0.6854602694511414,
+      "spoof_prob_dp": 0.0010473112342879176,
+      "identity_score": 0.8099893927574158
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "LIVE",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_171831": {
+    "timestamp": "2025-10-30T17:18:31.899207",
+    "scores": {
+      "spoof_prob_vit": 0.9036073088645935,
+      "spoof_prob_dp": 0.18719331920146942
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "model_disagreement"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_171832": {
+    "timestamp": "2025-10-30T17:18:32.846056",
+    "scores": {
+      "spoof_prob_vit": 0.6509164571762085,
+      "spoof_prob_dp": 0.00047746929340064526,
+      "identity_score": 0.8748272657394409
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "LIVE",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_171833": {
+    "timestamp": "2025-10-30T17:18:33.882045",
+    "scores": {
+      "spoof_prob_vit": 0.940443754196167,
+      "spoof_prob_dp": 0.007874839939177036
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "model_disagreement"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_171834": {
+    "timestamp": "2025-10-30T17:18:34.957065",
+    "scores": {
+      "spoof_prob_vit": 0.9351973533630371,
+      "spoof_prob_dp": 0.11611852049827576
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "model_disagreement"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_171835": {
+    "timestamp": "2025-10-30T17:18:35.873930",
+    "scores": {
+      "spoof_prob_vit": 0.9430167078971863,
+      "spoof_prob_dp": 0.020586345344781876
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "model_disagreement"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_171836": {
+    "timestamp": "2025-10-30T17:18:36.852423",
+    "scores": {
+      "spoof_prob_vit": 0.9123557806015015,
+      "spoof_prob_dp": 0.006256342399865389
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "model_disagreement"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_171837": {
+    "timestamp": "2025-10-30T17:18:37.818342",
+    "scores": {
+      "spoof_prob_vit": 0.7757437825202942,
+      "spoof_prob_dp": 0.0009243089007213712
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "model_disagreement"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_171838": {
+    "timestamp": "2025-10-30T17:18:38.931412",
+    "scores": {
+      "spoof_prob_vit": 0.7597774863243103,
+      "spoof_prob_dp": 9.360661351820454e-06
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "model_disagreement"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_171839": {
+    "timestamp": "2025-10-30T17:18:39.889631",
+    "scores": {
+      "spoof_prob_vit": 0.8830511569976807,
+      "spoof_prob_dp": 0.0018697930499911308
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "model_disagreement"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_171840": {
+    "timestamp": "2025-10-30T17:18:40.987685",
+    "scores": {
+      "spoof_prob_vit": 0.8231667280197144,
+      "spoof_prob_dp": 0.011911440640687943
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "model_disagreement"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_171841": {
+    "timestamp": "2025-10-30T17:18:41.878451",
+    "scores": {
+      "spoof_prob_vit": 0.8291175961494446,
+      "spoof_prob_dp": 0.02575579658150673
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "model_disagreement"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_171842": {
+    "timestamp": "2025-10-30T17:18:42.924438",
+    "scores": {
+      "spoof_prob_vit": 0.8800325989723206,
+      "spoof_prob_dp": 0.002241475973278284
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "model_disagreement"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_171843": {
+    "timestamp": "2025-10-30T17:18:43.988104",
+    "scores": {
+      "spoof_prob_vit": 0.8395954370498657,
+      "spoof_prob_dp": 0.00011112380889244378
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "model_disagreement"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_171844": {
+    "timestamp": "2025-10-30T17:18:44.913404",
+    "scores": {
+      "spoof_prob_vit": 0.8563694357872009,
+      "spoof_prob_dp": 0.0002177668793592602
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "model_disagreement"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_171845": {
+    "timestamp": "2025-10-30T17:18:45.591937",
+    "scores": {
+      "spoof_prob_vit": 0.8693491220474243,
+      "spoof_prob_dp": 0.0002132220979547128
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "model_disagreement"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_171846": {
+    "timestamp": "2025-10-30T17:18:46.767686",
+    "scores": {
+      "spoof_prob_vit": 0.8931567072868347,
+      "spoof_prob_dp": 0.02188980206847191
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "model_disagreement"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_171850": {
+    "timestamp": "2025-10-30T17:18:50.953131",
+    "scores": {
+      "spoof_prob_vit": 0.7364398241043091,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_171851": {
+    "timestamp": "2025-10-30T17:18:51.082607",
+    "scores": {
+      "spoof_prob_vit": 0.7436110377311707,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172001": {
+    "timestamp": "2025-10-30T17:20:01.959914",
+    "scores": {
+      "spoof_prob_vit": 0.7369426488876343,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172002": {
+    "timestamp": "2025-10-30T17:20:02.405624",
+    "scores": {
+      "spoof_prob_vit": 0.735080897808075,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172003": {
+    "timestamp": "2025-10-30T17:20:03.859157",
+    "scores": {
+      "spoof_prob_vit": 0.7012950778007507,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172004": {
+    "timestamp": "2025-10-30T17:20:04.900934",
+    "scores": {
+      "spoof_prob_vit": 0.7214803099632263,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172005": {
+    "timestamp": "2025-10-30T17:20:05.907666",
+    "scores": {
+      "spoof_prob_vit": 0.6982942819595337,
+      "spoof_prob_dp": 1.0,
+      "identity_score": 0.6470780372619629
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "LIVE",
+      "reasons": [
+        "vit_uncertain",
+        "model_disagreement"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172006": {
+    "timestamp": "2025-10-30T17:20:06.925868",
+    "scores": {
+      "spoof_prob_vit": 0.7267308235168457,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172007": {
+    "timestamp": "2025-10-30T17:20:07.987217",
+    "scores": {
+      "spoof_prob_vit": 0.7324802279472351,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172008": {
+    "timestamp": "2025-10-30T17:20:08.978435",
+    "scores": {
+      "spoof_prob_vit": 0.7119635939598083,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172009": {
+    "timestamp": "2025-10-30T17:20:09.107688",
+    "scores": {
+      "spoof_prob_vit": 0.737235963344574,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172010": {
+    "timestamp": "2025-10-30T17:20:10.418568",
+    "scores": {
+      "spoof_prob_vit": 0.7410007119178772,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172011": {
+    "timestamp": "2025-10-30T17:20:11.902684",
+    "scores": {
+      "spoof_prob_vit": 0.7330822944641113,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172012": {
+    "timestamp": "2025-10-30T17:20:12.192649",
+    "scores": {
+      "spoof_prob_vit": 0.7490154504776001,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172013": {
+    "timestamp": "2025-10-30T17:20:13.991344",
+    "scores": {
+      "spoof_prob_vit": 0.7330665588378906,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172014": {
+    "timestamp": "2025-10-30T17:20:14.791182",
+    "scores": {
+      "spoof_prob_vit": 0.7475663423538208,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172015": {
+    "timestamp": "2025-10-30T17:20:15.558807",
+    "scores": {
+      "spoof_prob_vit": 0.7325238585472107,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172016": {
+    "timestamp": "2025-10-30T17:20:16.183311",
+    "scores": {
+      "spoof_prob_vit": 0.7413966059684753,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172017": {
+    "timestamp": "2025-10-30T17:20:17.898669",
+    "scores": {
+      "spoof_prob_vit": 0.7290927171707153,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172035": {
+    "timestamp": "2025-10-30T17:20:35.735169",
+    "scores": {
+      "spoof_prob_vit": 0.7252489924430847,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172047": {
+    "timestamp": "2025-10-30T17:20:47.961098",
+    "scores": {
+      "spoof_prob_vit": 0.7204541563987732,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172048": {
+    "timestamp": "2025-10-30T17:20:48.874810",
+    "scores": {
+      "spoof_prob_vit": 0.7487531304359436,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172049": {
+    "timestamp": "2025-10-30T17:20:49.986465",
+    "scores": {
+      "spoof_prob_vit": 0.749448299407959,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172050": {
+    "timestamp": "2025-10-30T17:20:50.876598",
+    "scores": {
+      "spoof_prob_vit": 0.730021595954895,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172051": {
+    "timestamp": "2025-10-30T17:20:51.904285",
+    "scores": {
+      "spoof_prob_vit": 0.7463914752006531,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172106": {
+    "timestamp": "2025-10-30T17:21:06.252998",
+    "scores": {
+      "spoof_prob_vit": 0.7473044991493225,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172107": {
+    "timestamp": "2025-10-30T17:21:07.476819",
+    "scores": {
+      "spoof_prob_vit": 0.7456475496292114,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172109": {
+    "timestamp": "2025-10-30T17:21:09.649400",
+    "scores": {
+      "spoof_prob_vit": 0.7445002794265747,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172110": {
+    "timestamp": "2025-10-30T17:21:10.965438",
+    "scores": {
+      "spoof_prob_vit": 0.7455509901046753,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172111": {
+    "timestamp": "2025-10-30T17:21:11.988345",
+    "scores": {
+      "spoof_prob_vit": 0.7462454438209534,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172112": {
+    "timestamp": "2025-10-30T17:21:12.621717",
+    "scores": {
+      "spoof_prob_vit": 0.7468675971031189,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172114": {
+    "timestamp": "2025-10-30T17:21:14.493175",
+    "scores": {
+      "spoof_prob_vit": 0.737520694732666,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172115": {
+    "timestamp": "2025-10-30T17:21:15.597685",
+    "scores": {
+      "spoof_prob_vit": 0.7442373037338257,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172117": {
+    "timestamp": "2025-10-30T17:21:17.942894",
+    "scores": {
+      "spoof_prob_vit": 0.6007843613624573,
+      "spoof_prob_dp": 1.0,
+      "identity_score": 0.40370723605155945
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "LIVE",
+      "reasons": [
+        "model_disagreement"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172118": {
+    "timestamp": "2025-10-30T17:21:18.067233",
+    "scores": {
+      "spoof_prob_vit": 0.5937013626098633,
+      "spoof_prob_dp": 1.0,
+      "identity_score": 0.4218886196613312
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "LIVE",
+      "reasons": [
+        "model_disagreement"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172132": {
+    "timestamp": "2025-10-30T17:21:32.783686",
+    "scores": {
+      "spoof_prob_vit": 0.7490747570991516,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172134": {
+    "timestamp": "2025-10-30T17:21:34.597520",
+    "scores": {
+      "spoof_prob_vit": 0.7474178075790405,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172136": {
+    "timestamp": "2025-10-30T17:21:36.989327",
+    "scores": {
+      "spoof_prob_vit": 0.7085697650909424,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172137": {
+    "timestamp": "2025-10-30T17:21:37.998667",
+    "scores": {
+      "spoof_prob_vit": 0.7434958815574646,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172138": {
+    "timestamp": "2025-10-30T17:21:38.872482",
+    "scores": {
+      "spoof_prob_vit": 0.7442071437835693,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172139": {
+    "timestamp": "2025-10-30T17:21:39.992045",
+    "scores": {
+      "spoof_prob_vit": 0.7409054636955261,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172140": {
+    "timestamp": "2025-10-30T17:21:40.482155",
+    "scores": {
+      "spoof_prob_vit": 0.7296414971351624,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172141": {
+    "timestamp": "2025-10-30T17:21:41.968764",
+    "scores": {
+      "spoof_prob_vit": 0.7444865107536316,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172142": {
+    "timestamp": "2025-10-30T17:21:42.997588",
+    "scores": {
+      "spoof_prob_vit": 0.743945300579071,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172143": {
+    "timestamp": "2025-10-30T17:21:43.942845",
+    "scores": {
+      "spoof_prob_vit": 0.7308620810508728,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172144": {
+    "timestamp": "2025-10-30T17:21:44.805973",
+    "scores": {
+      "spoof_prob_vit": 0.7416831851005554,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172145": {
+    "timestamp": "2025-10-30T17:21:45.095384",
+    "scores": {
+      "spoof_prob_vit": 0.733279287815094,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172147": {
+    "timestamp": "2025-10-30T17:21:47.991722",
+    "scores": {
+      "spoof_prob_vit": 0.7056400775909424,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172148": {
+    "timestamp": "2025-10-30T17:21:48.797791",
+    "scores": {
+      "spoof_prob_vit": 0.7389469146728516,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172149": {
+    "timestamp": "2025-10-30T17:21:49.972453",
+    "scores": {
+      "spoof_prob_vit": 0.7383776307106018,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172150": {
+    "timestamp": "2025-10-30T17:21:50.931105",
+    "scores": {
+      "spoof_prob_vit": 0.7347391247749329,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172151": {
+    "timestamp": "2025-10-30T17:21:51.912465",
+    "scores": {
+      "spoof_prob_vit": 0.7401347160339355,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172152": {
+    "timestamp": "2025-10-30T17:21:52.946048",
+    "scores": {
+      "spoof_prob_vit": 0.7404841780662537,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172153": {
+    "timestamp": "2025-10-30T17:21:53.968303",
+    "scores": {
+      "spoof_prob_vit": 0.7005836963653564,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172154": {
+    "timestamp": "2025-10-30T17:21:54.591175",
+    "scores": {
+      "spoof_prob_vit": 0.6978776454925537,
+      "spoof_prob_dp": 1.0,
+      "identity_score": 0.719986081123352
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "LIVE",
+      "reasons": [
+        "vit_uncertain",
+        "model_disagreement"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172155": {
+    "timestamp": "2025-10-30T17:21:55.932436",
+    "scores": {
+      "spoof_prob_vit": 0.7386869192123413,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172156": {
+    "timestamp": "2025-10-30T17:21:56.976227",
+    "scores": {
+      "spoof_prob_vit": 0.7458269000053406,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172157": {
+    "timestamp": "2025-10-30T17:21:57.892162",
+    "scores": {
+      "spoof_prob_vit": 0.6732149124145508,
+      "spoof_prob_dp": 1.0,
+      "identity_score": 0.9677354693412781
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "LIVE",
+      "reasons": [
+        "vit_uncertain",
+        "model_disagreement"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172158": {
+    "timestamp": "2025-10-30T17:21:58.137979",
+    "scores": {
+      "spoof_prob_vit": 0.6989538669586182,
+      "spoof_prob_dp": 1.0,
+      "identity_score": 0.9305647015571594
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "LIVE",
+      "reasons": [
+        "vit_uncertain",
+        "model_disagreement"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172159": {
+    "timestamp": "2025-10-30T17:21:59.927498",
+    "scores": {
+      "spoof_prob_vit": 0.7265578508377075,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172200": {
+    "timestamp": "2025-10-30T17:22:00.882627",
+    "scores": {
+      "spoof_prob_vit": 0.712012529373169,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172201": {
+    "timestamp": "2025-10-30T17:22:01.886855",
+    "scores": {
+      "spoof_prob_vit": 0.7011764049530029,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172202": {
+    "timestamp": "2025-10-30T17:22:02.736675",
+    "scores": {
+      "spoof_prob_vit": 0.7325169444084167,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172203": {
+    "timestamp": "2025-10-30T17:22:03.611064",
+    "scores": {
+      "spoof_prob_vit": 0.7170422077178955,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172204": {
+    "timestamp": "2025-10-30T17:22:04.547946",
+    "scores": {
+      "spoof_prob_vit": 0.7489840388298035,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172205": {
+    "timestamp": "2025-10-30T17:22:05.743808",
+    "scores": {
+      "spoof_prob_vit": 0.672844409942627,
+      "spoof_prob_dp": 1.0,
+      "identity_score": 0.8863795399665833
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "LIVE",
+      "reasons": [
+        "vit_uncertain",
+        "model_disagreement"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172206": {
+    "timestamp": "2025-10-30T17:22:06.949399",
+    "scores": {
+      "spoof_prob_vit": 0.7417773604393005,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172207": {
+    "timestamp": "2025-10-30T17:22:07.998602",
+    "scores": {
+      "spoof_prob_vit": 0.7092767357826233,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172208": {
+    "timestamp": "2025-10-30T17:22:08.713511",
+    "scores": {
+      "spoof_prob_vit": 0.7373181581497192,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172209": {
+    "timestamp": "2025-10-30T17:22:09.283042",
+    "scores": {
+      "spoof_prob_vit": 0.7343836426734924,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172210": {
+    "timestamp": "2025-10-30T17:22:10.768446",
+    "scores": {
+      "spoof_prob_vit": 0.7426024675369263,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172211": {
+    "timestamp": "2025-10-30T17:22:11.470573",
+    "scores": {
+      "spoof_prob_vit": 0.7215679883956909,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172455": {
+    "timestamp": "2025-10-30T17:24:55.826268",
+    "scores": {
+      "spoof_prob_vit": 0.7221941947937012,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172457": {
+    "timestamp": "2025-10-30T17:24:57.953322",
+    "scores": {
+      "spoof_prob_vit": 0.739956259727478,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172458": {
+    "timestamp": "2025-10-30T17:24:58.272883",
+    "scores": {
+      "spoof_prob_vit": 0.6803407669067383,
+      "spoof_prob_dp": 1.0,
+      "identity_score": 0.7027468085289001
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "LIVE",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172500": {
+    "timestamp": "2025-10-30T17:25:00.219802",
+    "scores": {
+      "spoof_prob_vit": 0.6674918532371521,
+      "spoof_prob_dp": 1.0,
+      "identity_score": 0.7786701917648315
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "LIVE",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172502": {
+    "timestamp": "2025-10-30T17:25:02.947719",
+    "scores": {
+      "spoof_prob_vit": 0.7314433455467224,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172503": {
+    "timestamp": "2025-10-30T17:25:03.391697",
+    "scores": {
+      "spoof_prob_vit": 0.7300063371658325,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_172504": {
+    "timestamp": "2025-10-30T17:25:04.820228",
+    "scores": {
+      "spoof_prob_vit": 0.7247322797775269,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_174043": {
+    "timestamp": "2025-10-30T17:40:43.810473",
+    "scores": {
+      "spoof_prob_vit": 0.6639527678489685,
+      "spoof_prob_dp": 1.0,
+      "identity_score": 0.9205372333526611
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "LIVE",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_174053": {
+    "timestamp": "2025-10-30T17:40:53.492873",
+    "scores": {
+      "spoof_prob_vit": 0.6823170781135559,
+      "spoof_prob_dp": 1.0,
+      "identity_score": 0.7605471611022949
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "LIVE",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_174054": {
+    "timestamp": "2025-10-30T17:40:54.986765",
+    "scores": {
+      "spoof_prob_vit": 0.6990170478820801,
+      "spoof_prob_dp": 1.0,
+      "identity_score": 0.96809983253479
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "LIVE",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_174131": {
+    "timestamp": "2025-10-30T17:41:31.374765",
+    "scores": {
+      "spoof_prob_vit": 0.6532565355300903,
+      "spoof_prob_dp": 1.0,
+      "identity_score": 0.8993151187896729
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "LIVE",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_174132": {
+    "timestamp": "2025-10-30T17:41:32.985278",
+    "scores": {
+      "spoof_prob_vit": 0.7098571062088013,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_174133": {
+    "timestamp": "2025-10-30T17:41:33.959415",
+    "scores": {
+      "spoof_prob_vit": 0.6849377751350403,
+      "spoof_prob_dp": 1.0,
+      "identity_score": 0.9273405075073242
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "LIVE",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_174134": {
+    "timestamp": "2025-10-30T17:41:34.359557",
+    "scores": {
+      "spoof_prob_vit": 0.6931185126304626,
+      "spoof_prob_dp": 1.0,
+      "identity_score": 0.9189170598983765
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "LIVE",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_174135": {
+    "timestamp": "2025-10-30T17:41:35.625236",
+    "scores": {
+      "spoof_prob_vit": 0.6666896343231201,
+      "spoof_prob_dp": 1.0,
+      "identity_score": 0.9590960741043091
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "LIVE",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  },
+  "20251030_174136": {
+    "timestamp": "2025-10-30T17:41:36.998444",
+    "scores": {
+      "spoof_prob_vit": 0.7082424163818359,
+      "spoof_prob_dp": 1.0
+    },
+    "context": {
+      "camera_quality": "unknown",
+      "decision": "SPOOF",
+      "reasons": [
+        "vit_uncertain"
+      ]
+    },
+    "status": "pending"
+  }
+}

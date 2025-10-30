@@ -22,5 +22,39 @@ models:
     filename: "ViT.pt"
     num_classes: 2
 
-known_db_path: "C:/Users/Acer/source/repos/DSS/Fairness_Aware_Face_Recognition_Financial_Authentication_with_PAD/known_faces_db.pt"
-vit_spoof_threshold: 0.5
+
+known_db_path: "database/known_faces_db.pt"
+
+device_thresholds:
+  low:
+    identity_threshold: 0.35
+    spoof_threshold: 0.75
+  mid:
+    identity_threshold: 0.40
+    spoof_threshold: 0.70
+  high:
+    identity_threshold: 0.45
+    spoof_threshold: 0.65
+  default:
+    identity_threshold: 0.40
+    spoof_threshold: 0.70
+
+review_paths:
+  needs_review: "data/needs_review"
+  retraining:
+    live: "data/retraining_set/live"
+    spoof: "data/retraining_set/spoof"
+  metadata: "data/needs_review/metadata.json"
+
+# Configuration for auto-saving uncertain cases into review queue
+uncertainty:
+  # Narrower ViT uncertainty band to reduce noisy 'vit_uncertain' saves
+  lower_spoof: 0.65
+  upper_spoof: 0.75
+  # Minimum identity (similarity) score to auto-add to DB (keeps auto-add conservative)
+  min_identity_score_for_auto_add: 0.45
+  # Require at least this many images before allowing automatic DB append
+  min_images_for_auto_add: 3
+  # Debounce/deduplicate saves from same face over short interval (seconds)
+  cooldown_seconds: 5
+  auto_save_enabled: true

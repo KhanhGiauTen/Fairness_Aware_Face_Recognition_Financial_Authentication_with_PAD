@@ -17,6 +17,7 @@ import math
 from ultralytics import YOLO
 from torchvision.models import vit_b_16, ViT_B_16_Weights
 
+
 # ==========================================================
 ## 2. Kiến trúc Model 
 # ==========================================================
@@ -162,89 +163,6 @@ class FaceAnalysisDSS:
             num_classes=num_vit_classes, # Phải là 2 (Live/Spoof)
             pretrained=False 
         )
-
-        # --- Các Nhãn (Labels) ---
-        # self.deepix_threshold = 0.5 # Ngưỡng cho DeepPixBis 
-        self.vit_labels = {0: 'THAT', 1: 'GIA MAO'} # 0=Live, 1=Spoof
-        self.vit_spoof_threshold = vit_spoof_threshold 
-        print(f"Sử dụng ngưỡng phát hiện giả mạo (ViT): {self.vit_spoof_threshold}")
-        # --- Tải Cơ sở dữ liệu Khuôn mặt đã biết ---
-        self.known_embeddings, self.known_names = self._load_known_db(known_db_path)
-
-        # --- Khởi tạo các Phép biến đổi Ảnh ---
-        self._init_transforms()
-        
-        print("Hệ thống DSS đã sẵn sàng.")
-
-    def _load_yolo_from_kaggle_hub(self, model_handle):
-        print(f"Đang tải YOLO từ Kaggle Hub: {model_handle}")
-        try:
-            model_dir = kagglehub.model_download(model_handle)
-            yolo_model_path = os.path.join(model_dir, "YOLO.pt") 
-            if not os.path.exists(yolo_model_path):
-                 pt_files = [f for f in os.listdir(model_dir) if f.endswith(".pt")]
-                 if not pt_files:
-                     raise FileNotFoundError(f"Không tìm thấy file .pt nào trong thư mục YOLO tải về: {model_dir}")
-                 yolo_model_path = os.path.join(model_dir, pt_files[0])
-            print(f"Đang load YOLO model từ: {yolo_model_path}")
-            model = YOLO(yolo_model_path)
-            print("Tải YOLO thành công.")
-            return model
-        except Exception as e:
-            print(f"Lỗi khi tải hoặc load YOLO {model_handle}: {e}")
-            raise
-
-    def _load_from_kaggle_hub(self, model_architecture_class, model_handle, model_filename, **kwargs):
-        print(f"Đang tải từ Kaggle Hub: {model_handle} (file: {model_filename})")
-        try:
-            model_dir = kagglehub.model_download(model_handle)
-            checkpoint_path = os.path.join(model_dir, model_filename)
-            if not os.path.exists(checkpoint_path):
-                 raise FileNotFoundError(f"File '{model_filename}' không tìm thấy trong thư mục tải về: {model_dir}")
-            print(f"Đang load checkpoint: {checkpoint_path}")
-            checkpoint = torch.load(checkpoint_path, map_location=self.device)
-            model_instance = model_architecture_class(**kwargs).to(self.device)
-            state_dict = checkpoint.get('model_state_dict', checkpoint)
-            if list(state_dict.keys())[0].startswith('module.'):
-                state_dict = {k.replace('module.', '', 1): v for k, v in state_dict.items()}
-            load_result = model_instance.load_state_dict(state_dict, strict=False)
-            print(f"Kết quả load state dict (strict=False): {load_result}")
-            model_instance.eval()
-            print("Tải model thành công.")
-            return model_instance
-        except Exception as e:
-            print(f"Lỗi khi tải hoặc load model {model_handle}: {e}")
-            raise
-
-    def _load_known_db(self, db_path):
-        print(f"Đang tải CSDL ArcFace từ {db_path}...")
-        if not os.path.exists(db_path):
-             print(f"Cảnh báo: Không tìm thấy file CSDL tại {db_path}. Sử dụng dữ liệu giả.")
-             known_embeddings = [torch.randn(512), torch.randn(512)]
-             known_names = ["Nguoi1", "Nguoi2"]
-        else:
-            try:
-                db_data = torch.load(db_path, map_location='cpu') 
-                if 'embeddings' not in db_data or 'names' not in db_data:
-                    raise KeyError("File CSDL phải chứa key 'embeddings' và 'names'.")
-                known_embeddings = db_data['embeddings']
-                known_names = db_data['names']
-                print(f"Đã tải {len(known_names)} định danh đã biết.")
-            except Exception as e:
-                print(f"Lỗi khi tải file CSDL: {e}. Sử dụng dữ liệu giả.")
-                known_embeddings = [torch.randn(512), torch.randn(512)]
-                known_names = ["Nguoi1", "Nguoi2"]
-        if known_embeddings:
-            embeddings_tensor = F.normalize(torch.stack(known_embeddings), p=2, dim=1).to(self.device)
-        else:
-            embeddings_tensor = torch.empty((0, 512)).to(self.device)
-        return embeddings_tensor, known_names
-
-
-    def _init_transforms(self):
-        imagenet_mean = [0.485, 0.456, 0.406]
-        imagenet_std = [0.229, 0.224, 0.225]
-        
         # # DeepPixBis (kích thước input của DenseNet) - Comment lại
         # self.deepix_transform = transforms.Compose([
         #     transforms.Resize((224, 224)),
@@ -260,6 +178,9 @@ class FaceAnalysisDSS:
         ])
         
         # ViT (Spoof Detector)
+        # Dùng chuẩn ImageNet cho ViT
+        imagenet_mean = [0.485, 0.456, 0.406]
+        imagenet_std = [0.229, 0.224, 0.225]
         self.vit_transform = transforms.Compose([
             transforms.Resize((224, 224)),
             transforms.ToTensor(),
@@ -306,7 +227,8 @@ class FaceAnalysisDSS:
                 status_label = "GIA MAO" # Gán lại nhãn nếu vượt ngưỡng
                 color = (0, 0, 255) # Màu đỏ
                 cv2.rectangle(frame_bgr, (x1, y1), (x2, y2), color, 2)
-                cv2.putText(frame_bgr, f"{status_label} (ViT: {spoof_prob_vit:.2f})", (x1, y1 - 10), 
+                spoof_text = f"{status_label} (ViT: {float(spoof_prob_vit):.2f})" if isinstance(spoof_prob_vit, (float, int)) else f"{status_label} (ViT: {spoof_prob_vit})"
+                cv2.putText(frame_bgr, spoof_text, (x1, y1 - 10), 
                             cv2.FONT_HERSHEY_SIMPLEX, 0.6, color, 2)
                 pipeline_results.append({
                     "bbox": [x1, y1, x2, y2], 
@@ -331,7 +253,8 @@ class FaceAnalysisDSS:
                 # Hiển thị xác suất của ViT (hoặc cả hai nếu muốn)
                 display_prob = spoof_prob_vit 
                 cv2.rectangle(frame_bgr, (x1, y1), (x2, y2), color, 2)
-                cv2.putText(frame_bgr, f"{status} (ViT: {display_prob:.2f})", (x1, y1 - 10), 
+                display_text = f"{status} (ViT: {float(display_prob):.2f})" if isinstance(display_prob, (float, int)) else f"{status} (ViT: {display_prob})"
+                cv2.putText(frame_bgr, display_text, (x1, y1 - 10), 
                             cv2.FONT_HERSHEY_SIMPLEX, 0.6, color, 2)
                 pipeline_results.append({
                     "bbox": [x1, y1, x2, y2], 
@@ -352,7 +275,7 @@ class FaceAnalysisDSS:
                 identity, id_score = self._get_identity(embedding)
 
             # --- Bước 5: Tổng hợp kết quả và vẽ ---
-            result_text = f"{identity} ({id_score:.2f})" 
+            result_text = f"{identity} ({float(id_score):.2f})" if isinstance(id_score, (float, int)) else f"{identity} ({id_score})" 
             cv2.rectangle(frame_bgr, (x1, y1), (x2, y2), color, 2)
             cv2.putText(frame_bgr, result_text, (x1, y1 - 10), 
                         cv2.FONT_HERSHEY_SIMPLEX, 0.6, color, 2)
