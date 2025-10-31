@@ -30,8 +30,8 @@ This research presents a comprehensive DSS solution that not only achieves high 
 
 1.  Clone the repository:
     ```bash
-    git clone [https://github.com/](https://github.com/)[Your_Username]/[Your_Repo_Name].git
-    cd [Your_Repo_Name]
+    git clone https://github.com/KhanhGiauTen/Fairness_Aware_Face_Recognition_Financial_Authentication_with_PAD.git
+    cd Fairness_Aware_Face_Recognition_Financial_Authentication_with_PAD
     ```
 
 2.  Install dependencies:
@@ -102,10 +102,10 @@ Follow these steps to run the system. A GPU-accelerated environment (e.g., Kaggl
 
 | Model | Weight File (Example) | Download Link |
 | :--- | :--- | :--- |
-| **YOLOv8 (Face Detection)** | `yolov8n-face.pt` | `[LINK_HERE]` |
-| **ArcFace (FR)** | `arcface_resnet50.pth` | `[LINK_HERE]` |
-| **ViT (PAD)** | `vit_pad_model.pth` | `[LINK_HERE]` |
-| **DeepPixBiS (PAD)** | `deeppixbis_model.pth` | `[LINK_HERE]` |
+| **YOLOv8 (Face Detection)** | `yolov8n-face.pt` | `https://huggingface.co/KhanhGiauTen/YOLO_FaceDetection` |
+| **ArcFace (FR)** | `arcface_resnet50.pth` | `https://huggingface.co/KhanhGiauTen/ArcFace` |
+| **ViT (PAD)** | `vit_pad_model.pth` | `https://huggingface.co/KhanhGiauTen/Vision_Transformer` |
+| **DeepPixBiS (PAD)** | `deeppixbis_model.pth` | `https://huggingface.co/KhanhGiauTen/DeepPixBis` |
 
 ## Results
 
