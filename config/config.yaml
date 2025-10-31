@@ -28,16 +28,16 @@ known_db_path: "database/known_faces_db.pt"
 device_thresholds:
   low:
     identity_threshold: 0.35
-    spoof_threshold: 0.75
+    spoof_threshold: 0.6
   mid:
     identity_threshold: 0.40
-    spoof_threshold: 0.70
+    spoof_threshold: 0.55
   high:
     identity_threshold: 0.45
-    spoof_threshold: 0.65
+    spoof_threshold: 0.45
   default:
     identity_threshold: 0.40
-    spoof_threshold: 0.70
+    spoof_threshold: 0.5
 
 review_paths:
   needs_review: "data/needs_review"
