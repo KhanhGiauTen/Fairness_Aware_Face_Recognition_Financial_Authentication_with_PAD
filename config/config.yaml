@@ -1,60 +1,63 @@
+# ==========================================
+# CẤU HÌNH HỆ THỐNG JOINT FAIRNESS-AWARE DSS
+# ==========================================
+
+system:
+  device: "cuda" # Hoặc "cpu" nếu không có GPU
+
+# 1. Cấu hình Model (SỬA LẠI TÊN HANDLE CHO ĐÚNG)
 models:
   yolo:
-    source: huggingface
-    handle: "KhanhGiauTen/YOLO_FaceDetection"
+    # Handle Kaggle chính xác từ code cũ của bạn
+    handle: "khnhnguyn222/yolo-facedetection/pyTorch/default" 
     filename: "YOLO.pt"
+    conf_threshold: 0.6
 
   deeppixbis:
-    source: huggingface
-    handle: "KhanhGiauTen/DeepPixBis"
+    handle: "khnhnguyn222/deeppixbis/pyTorch/default"
     filename: "DeepPixBis.pt"
 
   arcface:
-    source: huggingface
-    handle: "KhanhGiauTen/ArcFace"
+    handle: "khnhnguyn222/arcface-resnet34/pyTorch/default"
     filename: "ArcFace.pt"
     num_classes: 1000
     feature_dim: 512
 
   vit:
-    source: huggingface
-    handle: "KhanhGiauTen/Vision_Transformer"
+    handle: "khnhnguyn222/vision-transformer/pyTorch/default"
     filename: "ViT.pt"
     num_classes: 2
 
+database:
+  path: "database/known_faces_db.pt"
 
+# Key cho code đọc đúng
 known_db_path: "database/known_faces_db.pt"
 
-device_thresholds:
-  low:
-    identity_threshold: 0.35
-    spoof_threshold: 0.6
-  mid:
-    identity_threshold: 0.40
-    spoof_threshold: 0.55
-  high:
-    identity_threshold: 0.45
-    spoof_threshold: 0.45
-  default:
-    identity_threshold: 0.40
-    spoof_threshold: 0.5
+# 2. Hợp nhất mô hình PAD (Ensemble Learning)
+ensemble:
+  vit_weight: 0.6      
+  pixbis_weight: 0.4   
+  spoof_threshold: 0.5 # <--- (QUAN TRỌNG) Đã thêm tham số này để sửa lỗi KeyError
+
+# 3. Ngưỡng thích ứng (Adaptive Risk-Aware Thresholding)
+adaptive_threshold:
+  enable: true
+  base_fr_threshold: 0.65      
+  quality_penalty_weight: 0.15 
+  min_quality_score: 0.3       
+
+# 4. Hiệu chỉnh công bằng (Fairness Calibration)
+fairness:
+  enable: true
+  bias_offset:
+    female: 0.035      
+    dark_skin: 0.025   
+    default: 0.0
 
 review_paths:
   needs_review: "data/needs_review"
+  metadata: "data/needs_review/metadata.json"
   retraining:
     live: "data/retraining_set/live"
     spoof: "data/retraining_set/spoof"
-  metadata: "data/needs_review/metadata.json"
-
-# Configuration for auto-saving uncertain cases into review queue
-uncertainty:
-  # Narrower ViT uncertainty band to reduce noisy 'vit_uncertain' saves
-  lower_spoof: 0.65
-  upper_spoof: 0.75
-  # Minimum identity (similarity) score to auto-add to DB (keeps auto-add conservative)
-  min_identity_score_for_auto_add: 0.45
-  # Require at least this many images before allowing automatic DB append
-  min_images_for_auto_add: 3
-  # Debounce/deduplicate saves from same face over short interval (seconds)
-  cooldown_seconds: 5
-  auto_save_enabled: true

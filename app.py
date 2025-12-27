@@ -353,14 +353,14 @@ elif mode == "🖼️ Tải ảnh lên":
             col1_up, col2_up = st.columns(2)
             with col1_up:
                 st.subheader("Ảnh gốc")
-                st.image(pil_image, use_column_width=True)
+                st.image(pil_image, use_container_width=True)
             
             with col2_up:
                 st.subheader("Kết quả phân tích")
                 with st.spinner('⏳ Đang xử lý...'):
                     processed_frame_bgr, results = dss_pipeline.process_frame(frame_bgr.copy())
                 processed_frame_rgb = cv2.cvtColor(processed_frame_bgr, cv2.COLOR_BGR2RGB)
-                st.image(processed_frame_rgb, use_column_width=True)
+                st.image(processed_frame_rgb, use_container_width=True)
 
             st.divider()
             st.subheader("📄 Chi tiết kết quả:")
@@ -453,7 +453,7 @@ elif mode == "⚙️ Admin Review":
                     if image is not None:
                         st.image(cv2.cvtColor(image, cv2.COLOR_BGR2RGB), 
                                 caption="Ảnh cần review",
-                                use_column_width=True)
+                                use_container_width=True)
                     else:
                         st.error("Không thể đọc ảnh")
                 else:
@@ -510,7 +510,7 @@ elif mode == "⚙️ Admin Review":
                         
                         st.success("✅ Đã cập nhật case thành công!")
                         import time; time.sleep(1)
-                        st.experimental_rerun()
+                        st.rerun()
                     else:
                         st.error("Lỗi khi cập nhật case")
                 except Exception as e:
